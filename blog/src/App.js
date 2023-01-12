@@ -81,6 +81,10 @@ function App() {
         let copy = [...title];
         copy.unshift(add);
         setTitle(copy);
+
+        let copy2 =[...like];
+        copy2[copy2.length] = 0;
+        setLike(copy2);
       }}>
         글발행
       </button>
