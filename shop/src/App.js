@@ -6,11 +6,13 @@ import {useState} from "react";
 import data from './data.js';
 import {Routes, Route, Link, useNavigate, Outlet} from 'react-router-dom';
 import Detail from './pages/Detail';
+import axios from 'axios';
 function App() {
 
 
-  let [shoes] = useState(data)
+  let [shoes, setShoes] = useState(data)
   let navigate = useNavigate();
+  let [add, setAdd] = useState('')
 
   return (
     <div className='App'>
@@ -43,6 +45,17 @@ function App() {
         
             </div>
           </div> 
+          <button onClick={()=>{
+            axios.get('https://codingapple1.github.io/shop/data2.json')
+            .then((result)=>{
+              
+              let copy =[...shoes, ...result.data]
+              setShoes(copy);
+            })
+            .catch(()=>{
+              console.log('실패함')
+            })
+          }}>버튼</button>
         </>}/>
         <Route path ="/detail/:id" element={<Detail shoes={shoes} navigate={navigate}/>}/>
         
@@ -52,8 +65,11 @@ function App() {
           <Route path="location" element={<div>회사위치</div>}/>
         </Route>
        
+              
       </Routes>
     </div>
+
+
   );
 }
 
@@ -80,6 +96,7 @@ function Card(props){
 
   
 }
+
 
 
 
