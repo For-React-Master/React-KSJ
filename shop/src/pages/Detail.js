@@ -1,19 +1,14 @@
 import { useParams} from "react-router-dom";
 import { useEffect, useState, alert} from "react";
-
+import {Nav} from 'react-bootstrap';
 function Detail(props){
 
 
   let {id} = useParams();
   let result = props.shoes.find((x)=>x.id == id)
   let[alert, setAlert] = useState(true)
-  let[num, setNum] = useState('')
-
-  useEffect(()=>{
-    if(isNaN(num)==true){
-    	  console.log("그러지마세요")
-      }
-    },[num])
+  let[tap, setTap] = useState(0)
+  
 
 
   return(
@@ -36,12 +31,50 @@ function Detail(props){
             <p>{result.price}</p>
             <button className="btn btn-danger">주문하기</button> 
           </div>
-          <input onChange={(e)=>{setNum(e.target.value)}}></input>
+          
         </div>
+        
+        <Nav variant="tabs"  defaultActiveKey="link0">
+          <Nav.Item>
+            <Nav.Link eventKey="link0" onClick={()=>{setTap(0)}}>버튼0</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="link1" onClick={()=>{setTap(1)}}>버튼1</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="link2" onClick={()=>{setTap(2)}}>버튼2</Nav.Link>
+          </Nav.Item>
+        </Nav>
+        
+        <TabContent tap={tap} setTap={setTap}/>
+        
+
       </div> 
       
   )
   
 }
 
+function TabContent({tap}){
+
+  let [fade, setFade] = useState('')
+
+  useEffect(()=>{
+    setTimeout(()=>{setFade('end')}, 100)
+   
+    return ()=>{
+      setFade('')
+    }
+  }, [tap])
+
+  if(tap == 0){
+    return <div className={"start " + fade}>내용0</div>
+  }
+  if(tap == 1){
+    return <div className={"start " + fade}>내용1</div>
+  }
+  if(tap == 2){
+    return <div className={"start " + fade}>내용2</div>
+  }
+}
   export default Detail;
