@@ -8,6 +8,8 @@ import {Routes, Route, Link, useNavigate, Outlet} from 'react-router-dom';
 import Detail from './pages/Detail';
 import axios from 'axios';
 import Cart from './pages/Cart';
+import DetailMain from './pages/DetailMain';
+
 function App() {
 
 
@@ -22,9 +24,9 @@ function App() {
         <Container>
           <Navbar.Brand href="/">Discernment</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="/detail">Detail</Nav.Link>
-            <Nav.Link href="/cart">Cart</Nav.Link>
-            <Nav.Link onClick={()=>{navigate('/detail')}}>detail</Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/detail')}}>Detail</Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/cart')}}>Cart</Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/*')}}>Login</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
@@ -56,8 +58,9 @@ function App() {
             .catch(()=>{
               console.log('실패함')
             })
-          }}>버튼</button>
+          }}>상품 더보기</button>
         </>}/>
+        <Route path ="/detail" element={<DetailMain shoes={shoes} navigate={navigate}/>}/>
         <Route path ="/detail/:id" element={<Detail shoes={shoes} navigate={navigate}/>}/>
         
         <Route path="*" element={<>없는페이지임</>}/>

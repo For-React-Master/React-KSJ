@@ -1,16 +1,20 @@
 import { useParams} from "react-router-dom";
 import { useEffect, useState, alert} from "react";
 import {Nav} from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import {addProduct, changeCount} from './../store.js'
+
 function Detail(props){
 
 
   let {id} = useParams();
   let result = props.shoes.find((x)=>x.id == id)
-  let[alert, setAlert] = useState(true)
-  let[tap, setTap] = useState(0)
-  
-
-
+  let [alert, setAlert] = useState(true)
+  let [tap, setTap] = useState(0)
+  let state = useSelector((state)=>{ return state })
+  let dispatch = useDispatch()
+  let imgNum = result.id + 1
+  console.log(result.id)
   return(
 
       
@@ -23,13 +27,21 @@ function Detail(props){
             
         <div className="row">
           <div className="col-md-6">
-            <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
+            
+            <img src={'https://codingapple1.github.io/shop/shoes'+ imgNum + '.jpg'} width="100%" />
           </div>
           <div className="col-md-6">
             <h4 className="pt-5">{result.title}</h4>
             <p>{result.content}</p>
             <p>{result.price}</p>
-            <button className="btn btn-danger">주문하기</button> 
+            <button className="btn btn-danger" onClick={()=>{
+              
+                dispatch(addProduct({
+                 id : result.id,
+                 name : result.title,
+                 count : 1
+                }))
+              }}>장바구니에 추가</button> 
           </div>
           
         </div>
