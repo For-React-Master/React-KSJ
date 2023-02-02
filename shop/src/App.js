@@ -2,7 +2,7 @@
 import './App.css';
 import { Navbar, Nav, Container} from 'react-bootstrap';
 import styled from "styled-components";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import data from './data.js';
 import {Routes, Route, Link, useNavigate, Outlet} from 'react-router-dom';
 import Detail from './pages/Detail';
@@ -12,10 +12,15 @@ import DetailMain from './pages/DetailMain';
 
 function App() {
 
+  useEffect(()=>{
+    if(localStorage.getItem('watched') == null){ 
+      localStorage.setItem('watched', JSON.stringify([]))}
+  })
 
   let [shoes, setShoes] = useState(data)
   let navigate = useNavigate();
   let [add, setAdd] = useState('')
+  let recently = localStorage.getItem('watched')
 
   return (
     <div className='App'>
@@ -36,6 +41,16 @@ function App() {
         <Route path ="/" element={<>
           <div className='main-bg'></div>
           <div className="container">
+            <div className='recently'>
+              <p>최근본상품
+              {
+                recently
+              }
+              </p>
+              
+              
+            </div>
+            
             <div className="row">
               
               {
